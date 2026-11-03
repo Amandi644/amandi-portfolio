@@ -82,7 +82,7 @@ totalUpdate();
 const freeShipping = 30;
 const costShipping = 5;
 
-const inputElement = document.getElementById("input");
+const inputElement = document.getElementById("basket-input");
 const basket = document.getElementById("basket");
 const nullBtn = document.getElementById("null-O-amandi");
 const minusButton = document.getElementById("minus-chis");
