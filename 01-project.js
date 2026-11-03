@@ -1,4 +1,8 @@
-// Variables and label
+
+// ===================================
+// 1. LENOVO LAPTOP SHOPPING CART
+// ===================================
+
 const laptop = document.getElementById("laptop");
 const total = document.getElementById("total");
 const nullButton = document.getElementById("reset-quantity");
@@ -9,74 +13,75 @@ const reset = document.querySelector(".reset");
 const push = document.querySelector(".push-button");
 const img = document.querySelector(".img");
 
-//Quantity Controll
 const price = 267;
 let quantityA = 0;
-let calculate = 0;
 
+function totalUpdate() {
+  const calculate = price * quantityA;
 
-//Call function update 
-function totalUpdate(){
-const calculate = price * quantityA;
-nullButton.textContent = quantityA;
-total.textContent = `Total: ${calculate} €`;
-
+  nullButton.textContent = quantityA;
+  total.textContent = `Total: ${calculate} €`;
 }
-// Add addEventListener()
-minus.addEventListener("click",()=>{
-  if(quantityA > 0){
-  quantityA--;
-  totalUpdate();
- } 
-});
 
-laptop.addEventListener("click",()=>{
-  quantityA++;
-  totalUpdate();
-});
-
-reset.addEventListener("click",()=>{
-  quantityA = 0;
+minus.addEventListener("click", () => {
+  if (quantityA > 0) {
+    quantityA--;
     totalUpdate();
-  
-});
-plus.addEventListener("click",()=>{
-  quantityA++;
-    totalUpdate();
-  
-});
-push.addEventListener("click",()=>{
-  if(push.textContent === "push?"){
-push.textContent = "Enter Your order";
-  }else{
-    push.textContent = "please select an item befor proceding";
   }
-})
-
-img.addEventListener("click",()=>{
-img.classList.toggle("img");
-})
- /*
- img.src="laptop.jpg";
- img.classList.toggle("img");
- document.body.appendChild(img);
- */
-
-submitCart.addEventListener("click",()=>{
-const calculate = price  * quantityA;
-total.textContent = `Total: ${calculate} €`;
-alert(`Your order  ${quantityA} totaling of Lenova-T480 € (s) ${calculate} has been submitted: € `);
 });
+
+laptop.addEventListener("click", () => {
+  quantityA++;
+  totalUpdate();
+});
+
+reset.addEventListener("click", () => {
+  quantityA = 0;
+  totalUpdate();
+});
+
+plus.addEventListener("click", () => {
+  quantityA++;
+  totalUpdate();
+});
+
+push.addEventListener("click", () => {
+  if (push.textContent.trim() === "push?") {
+    push.textContent = "Enter Your Order";
+  } else {
+    push.textContent = "Please select an item before proceeding";
+  }
+});
+
+img.addEventListener("click", () => {
+  img.classList.toggle("selected");
+});
+
+submitCart.addEventListener("click", () => {
+  if (quantityA === 0) {
+    alert("Please select at least one laptop!");
+    return;
+  }
+
+  const calculate = price * quantityA;
+
+  alert(
+    `Your Lenovo T480 order has been submitted!\n` +
+    `Quantity: ${quantityA}\n` +
+    `Total: ${calculate} €`
+  );
+});
+
 totalUpdate();
 
-//Free Shipping and Cost of Shipping:
 
+// ===================================
+// 2. BASKET WITH SHIPPING COST
+// ===================================
 
-// Shipping settings
 const freeShipping = 30;
 const costShipping = 5;
 
-// HTML elements
 const inputElement = document.getElementById("input");
 const basket = document.getElementById("basket");
 const nullBtn = document.getElementById("null-O-amandi");
@@ -88,7 +93,6 @@ const submitButton = document.getElementById("submit-chisimdi");
 
 let quantityD = 0;
 
-// Update basket and total
 function calculateUpdate() {
   const inputValue = Number(inputElement.value) || 0;
   const totalPrice = inputValue * quantityD;
@@ -96,33 +100,31 @@ function calculateUpdate() {
   nullBtn.textContent = quantityD;
 
   if (quantityD === 0) {
-    totalButton.textContent = "Total: 0€";
+    totalButton.textContent = "Total: 0 €";
     return;
   }
 
   if (totalPrice >= freeShipping) {
     totalButton.textContent =
-      `Total: ${totalPrice.toFixed(2)}€ (Free shipping)`;
+      `Total: ${totalPrice.toFixed(2)} € (Free shipping)`;
   } else {
     const finalTotal = totalPrice + costShipping;
+
     totalButton.textContent =
-      `Total: ${finalTotal.toFixed(2)}€ (Shipping: 5€)`;
+      `Total: ${finalTotal.toFixed(2)} € (Shipping: 5 €)`;
   }
 }
 
-// Click basket to add one item
 basket.addEventListener("click", () => {
   quantityD++;
   calculateUpdate();
 });
 
-// Plus button
 plusButton.addEventListener("click", () => {
   quantityD++;
   calculateUpdate();
 });
 
-// Minus button
 minusButton.addEventListener("click", () => {
   if (quantityD > 0) {
     quantityD--;
@@ -130,16 +132,13 @@ minusButton.addEventListener("click", () => {
   }
 });
 
-// Reset button
 resetButton.addEventListener("click", () => {
   quantityD = 0;
   calculateUpdate();
 });
 
-// Update when price changes
 inputElement.addEventListener("input", calculateUpdate);
 
-// Submit order
 submitButton.addEventListener("click", () => {
   const inputValue = Number(inputElement.value) || 0;
 
@@ -149,23 +148,25 @@ submitButton.addEventListener("click", () => {
   }
 
   const totalPrice = inputValue * quantityD;
-  const shipping =
-  totalPrice >= freeShipping ? 0 : costShipping;
+  const shipping = totalPrice >= freeShipping ? 0 : costShipping;
   const finalTotal = totalPrice + shipping;
-  
 
   alert(
-    `Order submitted!\nQuantity: ${quantityD}\n` +
-    `Total: ${finalTotal.toFixed(2)}€`
+    `Order submitted!\n` +
+    `Quantity: ${quantityD}\n` +
+    `Total: ${finalTotal.toFixed(2)} €`
   );
 });
 
 calculateUpdate();
-// Eyeglass Classic
+
+
+// ===================================
+// 3. EYEGLASS SHOPPING CART
+// ===================================
 
 const eyeGlas = document.querySelector(".eye-glas");
 const inputButton = document.getElementById("input");
-const imgesButton = document.getElementById("img-glas");
 const totalSpan = document.getElementById("total-span");
 const decrease = document.getElementById("decrease");
 const increase = document.getElementById("increase");
@@ -173,60 +174,64 @@ const settingNull = document.getElementById("setting-null");
 const sendSubmit = document.getElementById("send-submit");
 const cancelReset = document.getElementById("cancel-reset");
 
-//Quantity
 const eyeGlasprice = 156;
 let checkQuantity = 0;
 
 function checkUpdate() {
-const inputValue = Number(inputButton.value)||0;
-const calculatePrice = eyeGlasprice * checkQuantity;
-settingNull.textContent = checkQuantity;
+  const calculatePrice = eyeGlasprice * checkQuantity;
 
+  settingNull.textContent = checkQuantity;
 
-if(checkQuantity === 0){
-totalSpan.textContent = "Total: €";
-return;
+  if (checkQuantity === 0) {
+    totalSpan.textContent = "Total: 0 €";
+    return;
+  }
 
-}if(inputValue >= 0){
-totalSpan.textContent = `Total: ${calculatePrice} €`;
-return;
-}
-}
-eyeGlas.addEventListener("click",()=>{
-checkQuantity++;
-checkUpdate();
-
-});
-increase.addEventListener("click",()=>{
-checkQuantity++;
-checkUpdate();
-
-});
-
-cancelReset.addEventListener("click",()=>{
-checkQuantity = 0;
-checkUpdate();
-
-
-});
-decrease.addEventListener("click",()=>{
-if(checkQuantity > 0){
-checkQuantity--;
-checkUpdate();
-}
-});
-sendSubmit.addEventListener("click",()=>{
-if(checkQuantity === 0){
-alert("Please selcet at least one pair of glasse!");
-return;
+  totalSpan.textContent = `Total: ${calculatePrice} €`;
 }
 
-const calculatePrice = eyeGlasprice * checkQuantity;
-alert(`You selceted ${checkQuantity} glasse.Totaling: ${calculatePrice}`)
-
+eyeGlas.addEventListener("click", () => {
+  checkQuantity++;
+  checkUpdate();
 });
 
+increase.addEventListener("click", () => {
+  checkQuantity++;
+  checkUpdate();
+});
 
+decrease.addEventListener("click", () => {
+  if (checkQuantity > 0) {
+    checkQuantity--;
+    checkUpdate();
+  }
+});
+
+cancelReset.addEventListener("click", () => {
+  checkQuantity = 0;
+  checkUpdate();
+});
+
+sendSubmit.addEventListener("click", () => {
+  if (checkQuantity === 0) {
+    alert("Please select at least one pair of glasses!");
+    return;
+  }
+
+  const calculatePrice = eyeGlasprice * checkQuantity;
+
+  alert(
+    `You selected ${checkQuantity} pairs of glasses.\n` +
+    `Total: ${calculatePrice} €`
+  );
+});
+
+checkUpdate();
+
+
+// ===================================
+// 4. SIMPLE COUNTER
+// ===================================
 
 const quantityText = document.getElementById("quantity");
 const mButton = document.getElementById("m-button");
@@ -236,39 +241,27 @@ const countElement = document.getElementById("count");
 
 let count = 0;
 
-  
-mButton.addEventListener("click",()=>{
-if (count > 0) {
+mButton.addEventListener("click", () => {
+  if (count > 0) {
     count--;
-quantityText.textContent = count;
-  
-}
+    quantityText.textContent = count;
+  }
 });
 
-pButton.addEventListener("click",()=>{
+pButton.addEventListener("click", () => {
   count++;
-quantityText.textContent = count;
-  
-});
-rButton.addEventListener("click",()=>{
-count = 0;
   quantityText.textContent = count;
-  
-});
-countElement.addEventListener("click", ()=>{
-if(countElement.textContent.trim() === "Count!"){
- countElement.textContent ="Counted!";
-}else{
-  countElement.textContent = "Count!";
-  countElement.textContent.disabled = true;
-}
 });
 
+rButton.addEventListener("click", () => {
+  count = 0;
+  quantityText.textContent = count;
+});
 
-
-
-
-
-
-
-
+countElement.addEventListener("click", () => {
+  if (countElement.textContent.trim() === "Count!") {
+    countElement.textContent = "Counted!";
+  } else {
+    countElement.textContent = "Count!";
+  }
+});
